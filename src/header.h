@@ -1,4 +1,9 @@
 #pragma once
+#include <ESP8266WiFi.h>
+#include <WiFiClient.h>
+#include <ESP8266WebServer.h>
+#include <ESP8266mDNS.h>
+
 #include <Adafruit_AHTX0.h>
 #include <Adafruit_BusIO_Register.h>
 #include <Adafruit_I2CDevice.h>
@@ -13,3 +18,5 @@ int PM25 = 0;
 int PM10 = 0;
 float Temperature = 0;
 float Humidity = 0;
+
+void handleRoot();
