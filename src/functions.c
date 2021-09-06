@@ -18,12 +18,15 @@ void handleRoot(){
   </head>\
   <body>\
     <h1>Air Quality Tester</h1>\
-    <h2>Temperature:%.2f</h2>\
-    <h2>Humidity:%.2f</h2>\
+    <h2>Temperature:%.2f C</h2>\
+    <h2>Humidity:%.2f </h2>\
+    <h2>PM 1.0: %.2f µg/m3</h2>\
+    <h2>PM 2.5: %.2f µg/m3</h2>\
+    <h2>PM 10: %.2f µg/m3</h2>\
       </body>\
 </html>",   
 
-          Temperature, Humidity
+          Temperature, Humidity, PM1, PM25, PM10
     );
     server.send(200, "text/html", page);
 }
