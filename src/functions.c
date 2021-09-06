@@ -18,8 +18,8 @@ void handleRoot(){
   </head>\
   <body>\
     <h1>Air Quality Tester</h1>\
-    <h2>Temperature:%d</h2>\
-    <h2>Humidity:%d</h2>\
+    <h2>Temperature:%.2f</h2>\
+    <h2>Humidity:%.2f</h2>\
       </body>\
 </html>",   
 

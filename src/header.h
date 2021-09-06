@@ -9,7 +9,7 @@
 #include <Adafruit_I2CDevice.h>
 #include <Adafruit_I2CRegister.h>
 #include <Wire.h>
-#include <PMS.h>
+//#include <PMS.h>
 
 int Timer = 0;
 int TimeInterval = 0;
