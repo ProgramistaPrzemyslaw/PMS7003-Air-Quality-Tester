@@ -33,10 +33,13 @@ void setup(){
 void loop(){
 sensors_event_t hum, temp;
 server.handleClient();
+
+if(sec%30 == 0){
 aht.getEvent(&hum, &temp);
 Humidity = hum.relative_humidity;
 Temperature = temp.temperature;
 
+if(Temperature > -10 && Temperature <60){
 pms.wakeUp();
 delay(300);
 pms.requestRead();
@@ -48,6 +51,9 @@ PM1 = data.PM_AE_UG_1_0;
 }
 
 pms.sleep();
+}
+
+}
 
 //Serial.println(Humidity);
 //Serial.println(Temperature);
