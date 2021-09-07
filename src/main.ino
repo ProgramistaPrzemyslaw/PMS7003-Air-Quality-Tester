@@ -11,7 +11,9 @@ PMS::DATA data;
 void setup(){
     Serial.begin(9600);
     //Serial.println("Begin");
-    
+
+    pms.passiveMode();
+
     if(! aht.begin()){
       //  Serial.println("AHT not found");
         while(1) delay(10);
@@ -34,13 +36,21 @@ server.handleClient();
 aht.getEvent(&hum, &temp);
 Humidity = hum.relative_humidity;
 Temperature = temp.temperature;
-if(pms.read(data)){
+
+pms.wakeUp();
+delay(300);
+pms.requestRead();
+
+if(pms.readUntil(data)){
 PM10 = data.PM_AE_UG_10_0;
 PM25 = data.PM_AE_UG_2_5;
 PM1 = data.PM_AE_UG_1_0;
 }
+
+pms.sleep();
+
 //Serial.println(Humidity);
 //Serial.println(Temperature);
 //Serial.println("__________ ");
-delay(100);
+delay(800);
 }
