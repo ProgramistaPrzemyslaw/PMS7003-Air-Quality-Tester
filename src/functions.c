@@ -1,8 +1,4 @@
-/*
-PM1 norm = 
-PM2.5 norm = 25
-PM10 norm = 50
-*/
+
 #include "header.h"
 
 ESP8266WebServer server(80);
