@@ -20,6 +20,6 @@ float Temperature = 0;
 float Humidity = 0;
 int sec = millis()/1000;
 int minute = sec/60;
-int hour = min/60;
+int hour = minute/60;
 
 void handleRoot();
