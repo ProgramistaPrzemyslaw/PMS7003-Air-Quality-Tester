@@ -1,6 +1,12 @@
+/*
+PM1 norm = 
+PM2.5 norm = 25
+PM10 norm = 50
+*/
 #include "header.h"
 
 ESP8266WebServer server(80);
+
 //Remember not to have empty lines as spacing
 void handleRoot(){
     char page[1000];
@@ -19,14 +25,14 @@ void handleRoot(){
   <body>\
     <h1>Air Quality Tester</h1>\
     <h2>Temperature:%.2f C</h2>\
-    <h2>Humidity:%.2f </h2>\
-    <h2>PM 1.0: %.2f µg/m3</h2>\
-    <h2>PM 2.5: %.2f µg/m3</h2>\
-    <h2>PM 10: %.2f µg/m3</h2>\
+    <h2>Humidity:%.2f%% </h2>\
+    <h2>PM 1.0: %.2f ug/m3</h2>\
+    <h2>PM 2.5: %.2f ug/m3; %.2f%%</h2>\
+    <h2>PM 10: %.2f ug/m3; %.2f%%</h2>\
       </body>\
 </html>",   
 
-          Temperature, Humidity, PM1, PM25, PM10
+          Temperature, Humidity, PM1, PM25, PM25/25*100, PM10, PM10/50*100
     );
     server.send(200, "text/html", page);
 }
