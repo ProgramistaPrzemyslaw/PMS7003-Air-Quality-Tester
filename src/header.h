@@ -9,14 +9,17 @@
 #include <Adafruit_I2CDevice.h>
 #include <Adafruit_I2CRegister.h>
 #include <Wire.h>
-//#include <PMS.h>
+#include <PMS.h>
 
 int Timer = 0;
 int TimeInterval = 0;
-int PM1 = 0;
-int PM25 = 0;
-int PM10 = 0;
+float PM1 = 0;
+float PM25 = 0;
+float PM10 = 0;
 float Temperature = 0;
 float Humidity = 0;
+int sec = millis()/1000;
+int minute = sec/60;
+int hour = min/60;
 
 void handleRoot();
