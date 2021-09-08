@@ -44,12 +44,15 @@ if(sec%30 == 0){
 aht.getEvent(&hum, &temp);
 Humidity = hum.relative_humidity;
 Temperature = temp.temperature;
+}
 
+if(minute%30 == 0){
 if(Temperature > -10 && Temperature <60){
+
 digitalWrite(sleepPin,HIGH);
 pms.wakeUp();
 
-delay(5000);
+delay(30000);
 pms.requestRead();
 
 if(pms.readUntil(data)){
@@ -60,9 +63,10 @@ PM1 = data.PM_AE_UG_1_0;
 
 pms.sleep();
 digitalWrite(sleepPin,LOW);
-}
 
 }
+}
+
 
 //Serial.println(Humidity);
 //Serial.println(Temperature);
