@@ -25,11 +25,12 @@ void handleRoot(){
     <h2>PM 1.0: %.2f ug/m3</h2>\
     <h2>PM 2.5: %.2f ug/m3; %.2f%%</h2>\
     <h2>PM 10: %.2f ug/m3; %.2f%%</h2>\
-    <h2>Time elapsed: %02d:%02d:%02d</h2>\
+    <h2>Time elapsed since turned on</h2>\ 
+    <h2>%02d:%02d:%02d</h2>\
       </body>\
 </html>",   
 
-          Temperature, Humidity, PM1, PM25, PM25/25*100, PM10, PM10/50*100, hour, minute, sec
+          Temperature, Humidity, PM1, PM25, PM25/25*100, PM10, PM10/50*100, hour%24, minute%60, sec%60
     );
     server.send(200, "text/html", page);
 }
