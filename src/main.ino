@@ -11,7 +11,8 @@ PMS::DATA data;
 void setup(){
     Serial.begin(9600);
     //Serial.println("Begin");
-
+    pinMode(sleepPin, OUTPUT);
+    digitalWrite(sleepPin,HIGH);
     pms.passiveMode();
 
     if(! aht.begin()){
@@ -31,6 +32,11 @@ void setup(){
 } 
 
 void loop(){
+
+sec = millis()/1000;
+minute = sec/60;
+hour = minute/60;
+
 sensors_event_t hum, temp;
 server.handleClient();
 
@@ -40,8 +46,10 @@ Humidity = hum.relative_humidity;
 Temperature = temp.temperature;
 
 if(Temperature > -10 && Temperature <60){
+digitalWrite(sleepPin,HIGH);
 pms.wakeUp();
-delay(300);
+
+delay(5000);
 pms.requestRead();
 
 if(pms.readUntil(data)){
@@ -51,6 +59,7 @@ PM1 = data.PM_AE_UG_1_0;
 }
 
 pms.sleep();
+digitalWrite(sleepPin,LOW);
 }
 
 }
@@ -58,5 +67,5 @@ pms.sleep();
 //Serial.println(Humidity);
 //Serial.println(Temperature);
 //Serial.println("__________ ");
-delay(800);
+
 }
