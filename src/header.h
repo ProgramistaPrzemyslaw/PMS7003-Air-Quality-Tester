@@ -18,8 +18,9 @@ float PM25 = 0;
 float PM10 = 0;
 float Temperature = 0;
 float Humidity = 0;
-int sec = millis()/1000;
-int minute = sec/60;
-int hour = minute/60;
+int sec = 0;
+int minute = 0;
+int hour = 0;
+int sleepPin = 12;
 
 void handleRoot();
