@@ -12,7 +12,7 @@
 #include <PMS.h>
 
 int Timer = 0;
-int TimeInterval = 0;
+int TimeInterval = 45000;
 float PM1 = 0;
 float PM25 = 0;
 float PM10 = 0;
@@ -22,5 +22,6 @@ int sec = 0;
 int minute = 0;
 int hour = 0;
 int sleepPin = 12;
+bool readyToRead = false;
 
 void handleRoot();
