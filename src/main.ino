@@ -12,7 +12,7 @@ void setup(){
     Serial.begin(9600);
     //Serial.println("Begin");
     pinMode(sleepPin, OUTPUT);
-    digitalWrite(sleepPin,HIGH);
+    digitalWrite(sleepPin,LOW);
     pms.passiveMode();
 
     if(! aht.begin()){
@@ -49,10 +49,14 @@ Temperature = temp.temperature;
 if(minute%30 == 0){
 if(Temperature > -10 && Temperature <60){
 
+if(!readyToRead){
 digitalWrite(sleepPin,HIGH);
 pms.wakeUp();
+readyToRead = true;
+Timer = millis()+TimeInterval;
+}
 
-delay(30000);
+if(readyToRead && millis()>=Timer){
 pms.requestRead();
 
 if(pms.readUntil(data)){
@@ -63,9 +67,13 @@ PM1 = data.PM_AE_UG_1_0;
 
 pms.sleep();
 digitalWrite(sleepPin,LOW);
+}
 
 }
+}else if(readyToRead){
+  readyToRead = false;
 }
+
 
 
 //Serial.println(Humidity);
