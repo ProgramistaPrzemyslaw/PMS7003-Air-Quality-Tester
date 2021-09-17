@@ -34,8 +34,8 @@ void setup(){
 void loop(){
 
 sec = millis()/1000;
-minute = sec/60;
-hour = minute/60;
+minute = setMinute + sec/60;
+hour = setHour + minute/60;
 
 sensors_event_t hum, temp;
 server.handleClient();
@@ -76,7 +76,7 @@ addToArray(Temperature, PM1, PM25, PM10);
   readyToRead = false;
 }
 
-if(minute%96==0){
+if(minute%6==0){
 calculateAverage();
 }
 
