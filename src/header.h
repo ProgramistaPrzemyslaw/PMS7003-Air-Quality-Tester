@@ -21,6 +21,8 @@ float PM25 = 0;
 float PM10 = 0;
 float Temperature = 0;
 float Humidity = 0;
+int setHour = 0;
+int setMinute = 0;
 int sec = 0;
 int minute = 0;
 int hour = 0;
@@ -29,6 +31,8 @@ bool readyToRead = false;
 float array[N][M];
 float last24hAverage[N];
 
+
 void addToArray(float Temperature, float PM1, float PM25, float PM10);
 void handleRoot();
 void calculateAverage();
+void arrayToString();

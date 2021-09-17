@@ -28,13 +28,14 @@ void handleRoot(){
     <h2>Time elapsed since turned on</h2>\ 
     <h2>%02d:%02d:%02d</h2>\
     <h1>Last 24h Average Values</h1>\
-    <h2>T=%.2f C PM1=%.2f ug/m3</h2>\
-    <h2>PM2.5=%.2f%% PM10=%.2f%%</h2>\
+    <h2>T=%.2f C, PM1=%.2f ug/m3</h2>\
+    <h2>PM2.5=%.2f%%, PM10=%.2f%%</h2>\
       </body>\
 </html>",   
 
-          Temperature, Humidity, PM1, PM25, PM25/25*100, PM10, PM10/50*100, hour%24, minute%60, sec%60,
-          last24hAverage[0], last24hAverage[1], last24hAverage[2]/25*100, last24hAverage[3]/50*100
+          Temperature, Humidity, PM1, PM25, PM25/25*100, PM10, PM10/50*100,
+          (setHour+hour)%24, (setMinute+minute)%60, sec%60,
+          last24hAverage[0], last24hAverage[1], last24hAverage[2], last24hAverage[3]
     );
     server.send(200, "text/html", page);
 }
@@ -57,8 +58,8 @@ tempPM10[i+1] = array[3][i];
 }
 tempTemp[0] = Temperature;
 tempPM1[0] = PM1;
-tempPM25[0] = PM25;
-tempPM10[0] = PM10;
+tempPM25[0] = PM25*25/100;
+tempPM10[0] = PM10*50/100;
 
 for(int i=0;i<M;i++){
 array[0][i]=tempTemp[i];
@@ -77,3 +78,4 @@ void calculateAverage(){
     last24hAverage[i] /= M;
   }
 }
+
