@@ -46,7 +46,7 @@ Humidity = hum.relative_humidity;
 Temperature = temp.temperature;
 }
 
-if(minute%30 == 0){
+if(minute%2 == 0){
 if(Temperature > -10 && Temperature <60){
 
 if(!readyToRead){
@@ -56,7 +56,7 @@ readyToRead = true;
 Timer = millis()+TimeInterval;
 }
 
-if(readyToRead && millis()>=Timer){
+if(readyToRead && millis()==Timer){
 pms.requestRead();
 
 if(pms.readUntil(data)){
@@ -67,6 +67,8 @@ PM1 = data.PM_AE_UG_1_0;
 
 pms.sleep();
 digitalWrite(sleepPin,LOW);
+addToArray(Temperature, PM1, PM25, PM10);
+
 }
 
 }
@@ -74,7 +76,9 @@ digitalWrite(sleepPin,LOW);
   readyToRead = false;
 }
 
-
+if(minute%96==0){
+calculateAverage();
+}
 
 //Serial.println(Humidity);
 //Serial.println(Temperature);

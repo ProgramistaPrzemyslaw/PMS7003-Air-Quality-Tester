@@ -11,6 +11,9 @@
 #include <Wire.h>
 #include <PMS.h>
 
+#define N 4
+#define M 48
+
 int Timer = 0;
 int TimeInterval = 45000;
 float PM1 = 0;
@@ -23,5 +26,9 @@ int minute = 0;
 int hour = 0;
 int sleepPin = 12;
 bool readyToRead = false;
+float array[N][M];
+float last24hAverage[N];
 
+void addToArray(float Temperature, float PM1, float PM25, float PM10);
 void handleRoot();
+void calculateAverage();
