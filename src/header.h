@@ -36,3 +36,5 @@ void addToArray(float Temperature, float PM1, float PM25, float PM10);
 void handleRoot();
 void calculateAverage();
 void arrayToString();
+
+void drawGraph();

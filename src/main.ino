@@ -28,6 +28,7 @@ void setup(){
     //Serial.println(IP);
 
     server.on("/", handleRoot);
+    server.on("/test", drawGraph);
     server.begin();
 } 
 
@@ -38,6 +39,7 @@ minute = setMinute + sec/60;
 hour = setHour + minute/60;
 
 sensors_event_t hum, temp;
+
 server.handleClient();
 
 if(sec%30 == 0){
