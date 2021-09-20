@@ -5,7 +5,7 @@ ESP8266WebServer server(80);
 
 //Remember not to have empty lines as spacing
 void handleRoot(){
-    char page[1000];
+    char page[2000];
 
     snprintf(page,1000,
 
@@ -16,6 +16,7 @@ void handleRoot(){
     <title>Air Quality Tester</title>\
     <style>html { font-family: Helvetica; display: inline-block; margin: 0px auto; text-align: center;}\
       body { background-color: #cccccc; font-family: Arial, Helvetica, Sans-Serif; Color: #000088; }\
+      .button { background-color: #00010a; border: none; color: white; padding: 16px 40px;text-decoration: none; font-size: 10px; margin: 2px; cursor: pointer;}\
     </style>\
   </head>\
   <body>\
@@ -33,6 +34,7 @@ void handleRoot(){
     <img src=\"/pm25\" />\
     <img src=\"/pm10\" />\
     <img src=\"/temperature\" />\
+    <p><a href=\"/settime\"><button class=\"button\">Set Time</button></a></p>\
       </body>\
 </html>",   
 
@@ -42,9 +44,6 @@ void handleRoot(){
     );
     server.send(200, "text/html", page);
 }
-
-
-
 
 
 void addToArray(float Temperature, float PM1, float PM25, float PM10){
