@@ -90,7 +90,16 @@ void drawGraphPM10(){
   int spacing=0;
   char temp[100];
   out += "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"800\" height=\"450\">\n";
+  
   out += "<rect x=\"60\" width=\"705\" height=\"400\" fill=\"rgb(250, 230, 210)\" stroke-width=\"1\" stroke=\"rgb(0, 0, 0)\" />\n";
+  out += "<g class=\"axis-lines\">\n";
+  for(int i = 0; i<rows; i++){
+    sprintf(temp,"<line x1=\"60\" x2=\"765\" y1=\"%d\" y2=\"%d\" stroke=\"black\"></line>\n",spacing,spacing);
+    out += temp;
+    spacing += 50;
+  }
+  out += "</g>\n";
+  spacing = 0;
   out += "<g class=\"labels y-labels\">\n";
 
   for(int i = 0; i<rows; i++){
@@ -132,8 +141,16 @@ void drawGraphPM25(){
   char temp[100];
   out += "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"800\" height=\"450\">\n";
   out += "<rect x=\"60\" width=\"705\" height=\"400\" fill=\"rgb(250, 230, 210)\" stroke-width=\"1\" stroke=\"rgb(0, 0, 0)\" />\n";
+  
+   out += "<g class=\"axis-lines\">\n";
+  for(int i = 0; i<rows; i++){
+    sprintf(temp,"<line x1=\"60\" x2=\"765\" y1=\"%d\" y2=\"%d\" stroke=\"black\"></line>\n",spacing,spacing);
+    out += temp;
+    spacing += 50;
+  }
+  out += "</g>\n";
+  spacing = 0;
   out += "<g class=\"labels y-labels\">\n";
-
   for(int i = 0; i<rows; i++){
     sprintf(temp,"<text x=\"30\" y=\"%d\" style=\"alignment-baseline:hanging\">%d</text>\n",spacing,800-2*spacing);
     spacing += 50;
