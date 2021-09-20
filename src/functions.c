@@ -32,6 +32,7 @@ void handleRoot(){
     <h2>PM2.5=%.2f%%, PM10=%.2f%%</h2>\
     <img src=\"/pm25\" />\
     <img src=\"/pm10\" />\
+    <img src=\"/temperature\" />\
       </body>\
 </html>",   
 
@@ -162,4 +163,54 @@ void drawGraphPM25(){
   out += "</svg>\n";
   server.send(200, "image/svg+xml", out);
 }
+
+void drawGraphTemperature(){
+  String out;
+  out.reserve(6600);
+  int rows = 8;
+  int spacing=0;
+  int temperature[] ={-30,-20,-10,0,10,20,30,40}; 
+  char temp[100];
+  out += "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"800\" height=\"400\">\n";
+  out += "<rect x=\"60\" width=\"705\" height=\"350\" fill=\"rgb(250, 230, 210)\" stroke-width=\"1\" stroke=\"rgb(0, 0, 0)\" />\n";
+
+  out += "<g class=\"axis-lines\">\n";
+  for(int i = 0; i<rows; i++){
+    sprintf(temp,"<line x1=\"60\" x2=\"765\" y1=\"%d\" y2=\"%d\" stroke=\"black\"></line>\n",spacing,spacing);
+    out += temp;
+    spacing += 50;
+  }
+  out += "</g>\n";
+  out += "<g class=\"labels y-labels\">\n";
+  spacing=0;
+  for(int i = 0; i<rows; i++){
+    sprintf(temp,"<text x=\"30\" y=\"%d\" style=\"alignment-baseline:hanging\">%d</text>\n",spacing,temperature[rows-1-i]);
+    spacing += 50;
+    out += temp;
+  }
+  out += "</g>\n";
+
+  out += "<g class=\"labels x-labels\">\n";
+  spacing = 0;
+
+  for(int i = 0; i<24; i++){
+    sprintf(temp,"<text x=\"%d\" y=\"370\">%d</text>\n",60+spacing,i);
+    spacing += 30;
+    out += temp;
+  }
+  
+  out += "</g>\n";
+  out += "<g class=\"headings x-heading\"><text x=\"50%\" y=\"400\">Time</text></g>\n";
+  out += "<g class=\"headings y-heading\"><text x=\"15\" y=\"235\" transform=\"rotate(-90,15,235)\">Temperature(C)</text></g>";
+  out += "<polyline class=\"graphline\" points=\"";
+  int a = 100;
+  for(int i = 0; i<M; i++){
+    sprintf(temp,"%d,%d ",60+15*i,200-(int)(array[0][i]*5));
+    out += temp;
+  }
+  out +="\" fill=\"none\" stroke=\"green\" stroke-width=\"5\"/>\n";
+  out += "</svg>\n";
+  server.send(200, "image/svg+xml", out);
+}
+
 

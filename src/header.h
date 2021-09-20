@@ -37,4 +37,6 @@ void handleRoot();
 void calculateAverage();
 void arrayToString();
 
-void drawGraph();
+void drawGraphPM10();
+void drawGraphPM25();
+void drawGraphTemperature();

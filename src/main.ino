@@ -28,7 +28,9 @@ void setup(){
     //Serial.println(IP);
 
     server.on("/", handleRoot);
-    server.on("/test", drawGraph);
+    server.on("/pm25", drawGraphPM25);
+    server.on("/pm10", drawGraphPM10);
+    server.on("/temperature",drawGraphTemperature);
     server.begin();
 } 
 
