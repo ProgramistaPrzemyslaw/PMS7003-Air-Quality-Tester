@@ -110,7 +110,7 @@ void drawGraphPM10(){
   
   out += "</g>\n";
   out += "<g class=\"headings x-heading\"><text x=\"50%\" y=\"450\">Time</text></g>\n";
-  out += "<g class=\"headings y-heading\"><text x=\"15\" y=\"200\" transform=\"rotate(-90,15,200)\">PM 10</text></g>";
+  out += "<g class=\"headings y-heading\"><text x=\"15\" y=\"250\" transform=\"rotate(-90,15,250)\">PM 10 norm (%)</text></g>";
   out += "<polyline class=\"graphline\" points=\"";
   int a = 100;
   for(int i = 0; i<M; i++){
@@ -151,7 +151,7 @@ void drawGraphPM25(){
   
   out += "</g>\n";
   out += "<g class=\"headings x-heading\"><text x=\"50%\" y=\"450\">Time</text></g>\n";
-  out += "<g class=\"headings y-heading\"><text x=\"15\" y=\"200\" transform=\"rotate(-90,15,200)\">PM 2.5</text></g>";
+  out += "<g class=\"headings y-heading\"><text x=\"15\" y=\"250\" transform=\"rotate(-90,15,250)\">PM 2.5 norm (%)</text></g>";
   out += "<polyline class=\"graphline\" points=\"";
   int a = 100;
   for(int i = 0; i<M; i++){
@@ -162,3 +162,4 @@ void drawGraphPM25(){
   out += "</svg>\n";
   server.send(200, "image/svg+xml", out);
 }
+
