@@ -21,13 +21,12 @@ void handleRoot(){
   </head>\
   <body>\
     <h1>Air Quality Tester</h1>\
+    <h2>%02d:%02d:%02d</h2>\
     <h2>Temperature:%.2f C</h2>\
     <h2>Humidity:%.2f%% </h2>\
     <h2>PM 1.0: %.2f ug/m3</h2>\
     <h2>PM 2.5: %.2f ug/m3; %.2f%%</h2>\
     <h2>PM 10: %.2f ug/m3; %.2f%%</h2>\
-    <h2>Time elapsed since turned on</h2>\ 
-    <h2>%02d:%02d:%02d</h2>\
     <h1>Last 24h Average Values</h1>\
     <h2>T=%.2f C, PM1=%.2f ug/m3</h2>\
     <h2>PM2.5=%.2f%%, PM10=%.2f%%</h2>\
@@ -38,8 +37,8 @@ void handleRoot(){
       </body>\
 </html>",   
 
-          Temperature, Humidity, PM1, PM25, PM25/25*100, PM10, PM10/50*100,
-          hour%24, minute%60, sec%60,
+          hour%24, minute%60, sec%60, Temperature, Humidity,
+           PM1, PM25, PM25/25*100, PM10, PM10/50*100,
           last24hAverage[0], last24hAverage[1], last24hAverage[2], last24hAverage[3]
     );
     readyToChangeTime = false;
@@ -68,10 +67,10 @@ void handleSetTime(){
   <input type=\"text\" maxlength=\"5\" size=\"4\" name=\"time\" value=\"hh:mm\"><br>\
   <input type=\"submit\" size=\"4\" value=\"Set\">\
   </form>\
-  <p></p>\
-  <p></p>\
-  <p></p>\
-  <p></p>\
+  <p> </p>\
+  <p> </p>\
+  <p> </p>\
+  <p> </p>\
   <p><a href=\"/\"><button class=\"button\">Back to main page</button></a></p>\
       </body>\
 </html>", hour%24, minute%60, sec%60
@@ -112,6 +111,21 @@ server.send(200, "text/html", page);
 
 }
 
+void addToTimeArray(int hour, int minute){
+int tempHour[M];
+int tempMinute[M];
+for(int i=0;i<M-1;i++){
+tempHour[i+1] = TimeArray[0][i];
+tempMinute[i+1] = TimeArray[1][i];
+}
+tempHour[0] = hour;
+tempMinute[0] = minute;
+for(int i=0;i<M-1;i++){
+TimeArray[0][i] = tempHour[i];
+TimeArray[1][i] = tempMinute[i];
+}
+
+}
 
 void addToArray(float Temperature, float PM1, float PM25, float PM10){
 
@@ -156,7 +170,7 @@ void drawGraphPM10(){
   int rows = 9;
   int spacing=10;
   char temp[100];
-  out += "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"800\" height=\"460\">\n";
+  out += "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"800\" height=\"500\">\n";
   
   out += "<rect x=\"60\" y=\"10\" width=\"705\" height=\"400\" fill=\"rgb(250, 230, 210)\" stroke-width=\"1\" stroke=\"rgb(0, 0, 0)\" />\n";
   out += "<g class=\"axis-lines\">\n";
@@ -178,15 +192,15 @@ void drawGraphPM10(){
 
   out += "<g class=\"labels x-labels\">\n";
   spacing = 0;
-  for(int i = 0; i<24; i++){
+  for(int i = 0; i<(M/2); i++){
 
-    sprintf(temp,"<text x=\"%d\" y=\"430\">%d</text>\n",55+spacing,i);
-    spacing += 30;
+    sprintf(temp,"<text x=\"%d\" y=\"430\" transform=\"rotate(45,%d,430)\">%02d:%02d</text>\n",55+spacing, 55+spacing,TimeArray[0][2*i]%24,TimeArray[1][2*i]%60);
+    spacing +=30;
     out += temp;
   }
   
   out += "</g>\n";
-  out += "<g class=\"headings x-heading\"><text x=\"50%\" y=\"460\">Time</text></g>\n";
+  out += "<g class=\"headings x-heading\"><text x=\"50%\" y=\"480\">Time</text></g>\n";
   out += "<g class=\"headings y-heading\"><text x=\"15\" y=\"250\" transform=\"rotate(-90,15,250)\">PM 10 norm (%)</text></g>";
   out += "<polyline class=\"graphline\" points=\"";
   int a = 100;
