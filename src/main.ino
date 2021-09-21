@@ -31,14 +31,16 @@ void setup(){
     server.on("/pm25", drawGraphPM25);
     server.on("/pm10", drawGraphPM10);
     server.on("/temperature",drawGraphTemperature);
+    server.on("/settime",handleSetTime);
+    server.on("/get",handleSetGet);
     server.begin();
 } 
 
 void loop(){
 
-sec = millis()/1000;
-minute = setMinute + sec/60;
-hour = setHour + minute/60;
+sec = (compensation+millis())/1000;
+minute = sec/60;
+hour = minute/60;
 
 sensors_event_t hum, temp;
 
@@ -75,7 +77,10 @@ addToArray(Temperature, PM1, PM25, PM10);
 
 }
 
+}else{
+addToArray(Temperature, PM1, PM25, PM10);
 }
+
 }else if(readyToRead){
   readyToRead = false;
 }
