@@ -74,11 +74,12 @@ PM1 = data.PM_AE_UG_1_0;
 pms.sleep();
 digitalWrite(sleepPin,LOW);
 addToArray(Temperature, PM1, PM25, PM10);
-
+addToTimeArray(hour,minute);
 }
 
 }else{
 addToArray(Temperature, PM1, PM25, PM10);
+addToTimeArray(hour,minute);
 }
 
 }else if(readyToRead){

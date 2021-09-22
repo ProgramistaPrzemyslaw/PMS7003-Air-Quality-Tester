@@ -30,6 +30,7 @@ int compensation = 0;
 bool readyToRead = false;
 bool readyToChangeTime = false;
 float array[N][M];
+int TimeArray[2][M];
 float last24hAverage[N];
 
 void handleRoot();
@@ -39,6 +40,7 @@ void handleSetGet();
 void addToArray(float Temperature, float PM1, float PM25, float PM10);
 void calculateAverage();
 void arrayToString();
+void addToTimeArray(int hour, int minute);
 
 void drawGraphPM10();
 void drawGraphPM25();
