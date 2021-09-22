@@ -23,6 +23,7 @@ class PM10Graph: public Graph{
     int heigth_;
     int rows_;
     int colums_;
+    int margin_;
     String graph;
     public:
     PM10Graph(int width, int heigth,int rows, int columns);
