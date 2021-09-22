@@ -5,7 +5,8 @@
 PM10Graph::PM10Graph(int width, int heigth,int rows, int columns):
 width_(width), heigth_(heigth),rows_(rows),colums_(columns){
 
-margin_ = 50;
+x_margin_ = 50;
+y_margin_ = 60;
 }
 
 std::string PM10Graph::addHeader(){
@@ -35,4 +36,33 @@ std::string PM10Graph::addYTitle(std::string title){
     sprintf(buf,"<g class=\"headings y-heading\"><text x=\"%d\" y=\"%d\" transform=\"rotate(-90,%d,%d)\">%s</text></g>\n",
     15, heigth_-20, 15, heigth_-20, title);
     return buf;
+}
+
+std::string PM10Graph::addXLabel(int beginning, int end){
+    char buf[1000];
+    std::string temp;
+    int spacing = 0;
+    for(int i = 0; i< colums_; i++){
+        if(i%2==0){
+        sprintf(buf,"<text x=\"%d\" y=\"%d\" transform=\"rotate(45,%d,380)\">%02d:%02d</text>\n",
+        x_margin_+spacing+5, heigth_-y_margin_, x_margin_+spacing+5, heigth_-y_margin_,
+        TimeArray[0][i]%24,TimeArray[1][i]%60);
+        spacing +=30;
+        temp += buf;
+    }
+    }
+    return temp;
+}
+
+std::string PM10Graph::addYLabel(int beginning, int end){
+    char buf[1000];
+    std::string temp;
+    int spacing = pos_y;
+    for(int i = 0; i<rows; i++){
+    sprintf(buf,"<text x=\"%d\" y=\"%d\" style=\"alignment-baseline:hanging\">%d</text>\n",
+    ,x_margin_-20 ,spacing+4, beginning+(end+beginning)/rows_);
+    spacing += (heigth_-y_margin_-pos_y)/rows_;
+    temp += buf;
+  }
+    return temp;
 }
