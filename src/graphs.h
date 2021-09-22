@@ -6,29 +6,44 @@ private:
     /* data */
 public:
     Graph(int heigth, int width);
-    virtual void addRectangle(int posx, int posy, int heigth, int width);
-    virtual void addAxisLine(int numberOfLines);
-    virtual void addPlot();
-    virtual void addXLabel();
-    virtual void addYLabel();
-    virtual void addXTitle();
-    virtual void addYTitle();
-    virtual void drawGraph();
+    void drawGraph();
     ~Graph();
 };
 
-class PM10_Graph: public Graph{
+
+class Label{
     private:
     public:
+    Label();
+    void addXLabel();
+    void addYLabel();
+    ~Label();
 };
 
-class PM25_Graph: public Graph{
+class Title{
     private:
     public:
+    Title();
+    void addXTitle();
+    void addYTitle();
+    ~Title();
 };
 
-class Temperature_Graph: public Graph{
+class Lines{
     private:
     public:
+    Lines();
+    void addAxisLine(int numberOfLines);
+    void addPlot();
+    ~Lines();
 };
+
+class Rectangle{
+    private:
+    public:
+    Rectangle();
+    void addRectangle(int posx, int posy, int heigth, int width);
+    ~Rectangle();
+};
+
 
