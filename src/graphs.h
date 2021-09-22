@@ -3,47 +3,38 @@
 class Graph
 {
 private:
-    /* data */
 public:
     Graph(int heigth, int width);
-    void drawGraph();
-    ~Graph();
+    virtual void drawGraph() = 0;
+    virtual void addHeader() = 0;
+    virtual void addXLabel() = 0;
+    virtual void addYLabel() = 0;
+    virtual void addXTitle() = 0;
+    virtual void addYTitle() = 0;
+    virtual void addAxisLine(int numberOfLines) = 0;
+    virtual void addPlot() = 0;
+    virtual void addRectangle(int posx, int posy) = 0;
+    virtual ~Graph();
 };
 
-
-class Label{
+class PM10Graph: public Graph{
     private:
+    int width_;
+    int heigth_;
+    int rows_;
+    int colums_;
+    String graph;
     public:
-    Label();
-    void addXLabel();
-    void addYLabel();
-    ~Label();
+    PM10Graph(int width, int heigth,int rows, int columns);
+     void drawGraph();
+     void addHeader();
+     void addXLabel();
+     void addYLabel();
+     void addXTitle();
+     void addYTitle();
+     void addAxisLine(int numberOfLines);
+     void addPlot();
+     void addRectangle(int posx, int posy);
+    ~PM10Graph();
 };
-
-class Title{
-    private:
-    public:
-    Title();
-    void addXTitle();
-    void addYTitle();
-    ~Title();
-};
-
-class Lines{
-    private:
-    public:
-    Lines();
-    void addAxisLine(int numberOfLines);
-    void addPlot();
-    ~Lines();
-};
-
-class Rectangle{
-    private:
-    public:
-    Rectangle();
-    void addRectangle(int posx, int posy, int heigth, int width);
-    ~Rectangle();
-};
-
 
