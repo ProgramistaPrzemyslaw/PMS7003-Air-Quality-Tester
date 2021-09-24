@@ -16,8 +16,10 @@ std::string PM10Graph::addHeader(){
 }
 
 std::string PM10Graph::addRectangle(int posx, int posy){
-    int heigth = heigth_ - posy - margin_;
-    int width = width_ - posx - margin_;
+    pos_x_ = posx;
+    pos_y_ = posy;
+    int heigth = heigth_ - posy - y_margin_;
+    int width = width_ - posx - x_margin_;
     char buf[100];
     sprintf(buf,"<rect x=\"%d\" y=\"%d\" width=\"%d\" height=\"%d\" fill=\"rgb(250, 230, 210)\" stroke-width=\"1\" stroke=\"rgb(0, 0, 0)\" />\n",
     posx, posy, width, heigth );
@@ -57,12 +59,44 @@ std::string PM10Graph::addXLabel(int beginning, int end){
 std::string PM10Graph::addYLabel(int beginning, int end){
     char buf[1000];
     std::string temp;
-    int spacing = pos_y;
-    for(int i = 0; i<rows; i++){
+    int spacing = pos_y_;
+    for(int i = 0; i<rows_; i++){
     sprintf(buf,"<text x=\"%d\" y=\"%d\" style=\"alignment-baseline:hanging\">%d</text>\n",
-    ,x_margin_-20 ,spacing+4, beginning+(end+beginning)/rows_);
-    spacing += (heigth_-y_margin_-pos_y)/rows_;
+    x_margin_-20 ,spacing+4, beginning+(end+beginning)/rows_);
+    spacing += (heigth_-y_margin_-pos_y_)/rows_;
     temp += buf;
   }
     return temp;
 }
+
+std::string PM10Graph::addAxisLines(std::string axis){
+    char buf[100];
+    std::string temp;
+    
+    if(axis == "y"||axis == "Y"){
+        int spacing = pos_y_;
+        temp = "<g class=\"axis-lines\">\n";
+        for(int i = 0; i<rows_; i++){
+
+        sprintf(buf,"line x1=\"%d\" x2=\"%d\" y1=\"%d\" y2=\"%d\" stroke=\"black\"></line>\n",
+        pos_x_, width_-pos_x_, spacing, spacing);
+        spacing += (heigth_ - pos_y_ - y_margin_)/rows_;
+        temp += buf;
+        }
+        temp += "</g>\n";
+    }else if(axis == "x"||axis == "X"){
+        int spacing = pos_x_;
+        temp = "<g class=\"axis-lines\">\n";
+        for(int i = 0; i<colums_; i++){
+
+        sprintf(buf,"line x1=\"%d\" x2=\"%d\" y1=\"%d\" y2=\"%d\" stroke=\"black\"></line>\n",
+        spacing, spacing, pos_y_, heigth_-pos_y_);
+        spacing += (width_ - pos_x_ - x_margin_)/colums_;
+        temp += buf;
+        }
+        temp += "</g>\n";
+    }
+    
+    
+}
+
