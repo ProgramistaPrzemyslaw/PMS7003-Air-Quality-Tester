@@ -2,6 +2,7 @@
 #include "header.h"
 
 
+
 PMGraph::PMGraph(std::string title,int PM , int width, int heigth,int rows, int columns):
 title_(title), PM_(PM), width_(width), heigth_(heigth),rows_(rows),colums_(columns){
 
@@ -118,18 +119,3 @@ std::string PMGraph::endGraph(){
     return "</svg>\n";
 }
 
-void PMGraph::drawGraph(){
-    std::string graph;
-    graph += addHeader();
-    graph += addRectangle(60,10);
-    graph += addAxisLines("y");
-    graph += addAxisLines("x");
-    graph += addYLabel(0,1);
-    graph += addXLabel();
-    graph += addYTitle();
-    graph += addXTitle();
-    graph += addPlot();
-    graph += endGraph();
-    server.send(200,"image/svg+xml",graph);
-
-}
