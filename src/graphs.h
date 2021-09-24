@@ -1,6 +1,9 @@
 #pragma once
 #include <string>
 
+#define PM10_index 3
+#define PM25_index 2
+
 class Graph
 {
 private:
@@ -27,17 +30,19 @@ class PM10Graph: public Graph{
     int y_margin_;
     int pos_x_;
     int pos_y_;
+    int PM_;
     std::string graph_;
+    std::string title_;
     public:
-    PM10Graph(int width, int heigth,int rows, int columns);
+    PM10Graph(std::string title, int PM, int width, int heigth,int rows, int columns);
      void drawGraph();
      std::string addHeader();
-     std::string addXLabel(int beginning, int end);
+     std::string addXLabel();
      std::string addYLabel(int beginning, int end);
-     std::string addXTitle(std::string title);
-     std::string addYTitle(std::string title);
+     std::string addXTitle();
+     std::string addYTitle();
      std::string addAxisLines(std::string axis);
-     std::string addPlot(int PMxx);
+     std::string addPlot();
      std::string addRectangle(int posx, int posy);
      std::string endGraph();
     ~PM10Graph();

@@ -2,8 +2,8 @@
 #include "header.h"
 
 
-PM10Graph::PM10Graph(int width, int heigth,int rows, int columns):
-width_(width), heigth_(heigth),rows_(rows),colums_(columns){
+PM10Graph::PM10Graph(std::string title,int PM , int width, int heigth,int rows, int columns):
+title_(title), PM_(PM), width_(width), heigth_(heigth),rows_(rows),colums_(columns){
 
 x_margin_ = 50;
 y_margin_ = 60;
@@ -26,21 +26,21 @@ std::string PM10Graph::addRectangle(int posx, int posy){
     return buf;
 }
 
-std::string PM10Graph::addXTitle(std::string title){
+std::string PM10Graph::addXTitle(){
     char buf[100];
-    sprintf(buf,"<g class=\"headings x-heading\"><text x=\"50%\" y=\"%d\">%s</text></g>\n",
-    heigth_-20,title);
+    sprintf(buf,"<g class=\"headings x-heading\"><text x=\"50%\" y=\"%d\">Time</text></g>\n",
+    heigth_-20);
     return buf;
 }
 
-std::string PM10Graph::addYTitle(std::string title){
+std::string PM10Graph::addYTitle(){
     char buf[100];
     sprintf(buf,"<g class=\"headings y-heading\"><text x=\"%d\" y=\"%d\" transform=\"rotate(-90,%d,%d)\">%s</text></g>\n",
-    15, heigth_-20, 15, heigth_-20, title);
+    15, heigth_-20, 15, heigth_-20, title_);
     return buf;
 }
 
-std::string PM10Graph::addXLabel(int beginning, int end){
+std::string PM10Graph::addXLabel(){
     char buf[1000];
     std::string temp = "<g class=\"labels x-labels\">\n";
     int spacing = 0;
@@ -101,13 +101,13 @@ std::string PM10Graph::addAxisLines(std::string axis){
     return temp;
 }
 
-std::string PM10Graph::addPlot(int PMxx){
+std::string PM10Graph::addPlot(){
     char buf[100];
     std::string temp = "<polyline class=\"graphline\" points=\"";
     int spacing = (width_ - pos_x_ - x_margin_)/M;
     for(int i = 0; i<M;i++){
         sprintf(buf,"%d,%d ",
-        x_margin_+spacing*i, heigth_+pos_y_-(int)(array[2][i]*2));
+        x_margin_+spacing*i, heigth_+pos_y_-(int)(array[PM_][i]*2));
         temp += buf;
     }
     temp += "\" fill=\"none\" stroke=\"green\" stroke-width=\"2\"/>\n";
