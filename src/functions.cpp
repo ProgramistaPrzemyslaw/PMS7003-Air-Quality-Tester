@@ -323,3 +323,15 @@ void drawGraphTemperature(){
 int compensatedMillis(int hour, int minute){
   return (hour*60*60*1000+minute*60*1000 - millis());
 }
+
+int getMaxValue(int index){
+  int maxValue = 0;
+  for(int i = 0; i<M; i++){
+    int temp = array[index][i];
+
+    if(maxValue<temp)
+    maxValue = temp;
+
+  }
+
+}

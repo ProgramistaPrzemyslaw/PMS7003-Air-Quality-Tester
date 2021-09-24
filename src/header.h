@@ -47,3 +47,4 @@ void drawGraphPM25();
 void drawGraphTemperature();
 
 int compensatedMillis(int hour, int minute);
+int getMaxValue(int index);
