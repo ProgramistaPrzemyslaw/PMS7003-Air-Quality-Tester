@@ -20,7 +20,7 @@ public:
     virtual ~Graph();
 };
 
-class PM10Graph: public Graph{
+class PMGraph: public Graph{
     private:
     int width_;
     int heigth_;
@@ -34,7 +34,7 @@ class PM10Graph: public Graph{
     std::string graph_;
     std::string title_;
     public:
-    PM10Graph(std::string title, int PM, int width, int heigth,int rows, int columns);
+    PMGraph(std::string title, int PM, int width, int heigth,int rows, int columns);
      void drawGraph();
      std::string addHeader();
      std::string addXLabel();
@@ -45,6 +45,6 @@ class PM10Graph: public Graph{
      std::string addPlot();
      std::string addRectangle(int posx, int posy);
      std::string endGraph();
-    ~PM10Graph();
+    ~PMGraph();
 };
 

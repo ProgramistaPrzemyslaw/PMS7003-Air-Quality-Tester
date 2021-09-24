@@ -2,20 +2,20 @@
 #include "header.h"
 
 
-PM10Graph::PM10Graph(std::string title,int PM , int width, int heigth,int rows, int columns):
+PMGraph::PMGraph(std::string title,int PM , int width, int heigth,int rows, int columns):
 title_(title), PM_(PM), width_(width), heigth_(heigth),rows_(rows),colums_(columns){
 
 x_margin_ = 50;
 y_margin_ = 60;
 }
 
-std::string PM10Graph::addHeader(){
+std::string PMGraph::addHeader(){
     char buf[100];
     sprintf(buf,"<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"%d\" height=\"%d\">\n",width_,heigth_);
     return buf;
 }
 
-std::string PM10Graph::addRectangle(int posx, int posy){
+std::string PMGraph::addRectangle(int posx, int posy){
     pos_x_ = posx;
     pos_y_ = posy;
     int heigth = heigth_ - posy - y_margin_;
@@ -26,21 +26,21 @@ std::string PM10Graph::addRectangle(int posx, int posy){
     return buf;
 }
 
-std::string PM10Graph::addXTitle(){
+std::string PMGraph::addXTitle(){
     char buf[100];
     sprintf(buf,"<g class=\"headings x-heading\"><text x=\"50%\" y=\"%d\">Time</text></g>\n",
     heigth_-20);
     return buf;
 }
 
-std::string PM10Graph::addYTitle(){
+std::string PMGraph::addYTitle(){
     char buf[100];
     sprintf(buf,"<g class=\"headings y-heading\"><text x=\"%d\" y=\"%d\" transform=\"rotate(-90,%d,%d)\">%s</text></g>\n",
     15, heigth_-20, 15, heigth_-20, title_);
     return buf;
 }
 
-std::string PM10Graph::addXLabel(){
+std::string PMGraph::addXLabel(){
     char buf[1000];
     std::string temp = "<g class=\"labels x-labels\">\n";
     int spacing = 0;
@@ -57,7 +57,7 @@ std::string PM10Graph::addXLabel(){
     return temp;
 }
 
-std::string PM10Graph::addYLabel(int beginning, int end){
+std::string PMGraph::addYLabel(int beginning, int end){
     char buf[1000];
     std::string temp = "<g class=\"labels y-labels\">\n";
     int spacing = pos_y_;
@@ -71,7 +71,7 @@ std::string PM10Graph::addYLabel(int beginning, int end){
     return temp;
 }
 
-std::string PM10Graph::addAxisLines(std::string axis){
+std::string PMGraph::addAxisLines(std::string axis){
     char buf[100];
     std::string temp;
     
@@ -101,7 +101,7 @@ std::string PM10Graph::addAxisLines(std::string axis){
     return temp;
 }
 
-std::string PM10Graph::addPlot(){
+std::string PMGraph::addPlot(){
     char buf[100];
     std::string temp = "<polyline class=\"graphline\" points=\"";
     int spacing = (width_ - pos_x_ - x_margin_)/M;
@@ -114,6 +114,6 @@ std::string PM10Graph::addPlot(){
     return temp;
 }
 
-std::string PM10Graph::endGraph(){
+std::string PMGraph::endGraph(){
     return "</svg>\n";
 }
