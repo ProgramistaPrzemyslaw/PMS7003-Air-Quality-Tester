@@ -1,4 +1,23 @@
 #include "header.h"
+#include "graphs.h"
+
+int Timer = 0;
+int TimeInterval = 45000;
+float PM1 = 0;
+float PM25 = 0;
+float PM10 = 0;
+float Temperature = 0;
+float Humidity = 0;
+int sec = 0;
+int minute = 0;
+int hour = 0;
+int sleepPin = 12;
+int compensation = 0;
+bool readyToRead = false;
+bool readyToChangeTime = false;
+float array[N][M];
+int TimeArray[2][M];
+float last24hAverage[N];
 
 const char *ssid = "Air Quality Tester"; 
 const char *password = "123456789";  

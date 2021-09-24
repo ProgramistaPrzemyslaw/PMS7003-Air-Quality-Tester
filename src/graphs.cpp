@@ -1,5 +1,5 @@
 #include "graphs.h"
-#include "header.h"
+
 
 
 
@@ -119,3 +119,20 @@ std::string PMGraph::endGraph(){
     return "</svg>\n";
 }
 
+void PMGraph::drawGraph(){
+    std::string graph;
+    String page;
+    graph += addHeader();
+    graph += addRectangle(60,10);
+    graph += addAxisLines("y");
+    graph += addAxisLines("x");
+    graph += addYLabel(0,1);
+    graph += addXLabel();
+    graph += addYTitle();
+    graph += addXTitle();
+    graph += addPlot();
+    graph += endGraph();
+    page = graph.c_str();
+    //server.send(200,"image/svg+xml",page);
+
+}

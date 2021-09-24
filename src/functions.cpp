@@ -1,27 +1,9 @@
-#include "graphs.h"
 #include "header.h"
 
 ESP8266WebServer server(80);
 
 //Remember not to have empty lines as spacing
 
-void PMGraph::drawGraph(){
-    std::string graph;
-    String page;
-    graph += addHeader();
-    graph += addRectangle(60,10);
-    graph += addAxisLines("y");
-    graph += addAxisLines("x");
-    graph += addYLabel(0,1);
-    graph += addXLabel();
-    graph += addYTitle();
-    graph += addXTitle();
-    graph += addPlot();
-    graph += endGraph();
-    page = graph.c_str();
-    server.send(200,"image/svg+xml",page);
-
-}
 
 void handleRoot(){
     char page[2000];
