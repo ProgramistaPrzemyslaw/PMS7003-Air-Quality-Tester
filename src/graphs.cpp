@@ -42,7 +42,7 @@ std::string PM10Graph::addYTitle(std::string title){
 
 std::string PM10Graph::addXLabel(int beginning, int end){
     char buf[1000];
-    std::string temp;
+    std::string temp = "<g class=\"labels x-labels\">\n";
     int spacing = 0;
     for(int i = 0; i< colums_; i++){
         if(i%2==0){
@@ -53,12 +53,13 @@ std::string PM10Graph::addXLabel(int beginning, int end){
         temp += buf;
     }
     }
+    temp += "</g>\n";
     return temp;
 }
 
 std::string PM10Graph::addYLabel(int beginning, int end){
     char buf[1000];
-    std::string temp;
+    std::string temp = "<g class=\"labels y-labels\">\n";
     int spacing = pos_y_;
     for(int i = 0; i<rows_; i++){
     sprintf(buf,"<text x=\"%d\" y=\"%d\" style=\"alignment-baseline:hanging\">%d</text>\n",
@@ -66,6 +67,7 @@ std::string PM10Graph::addYLabel(int beginning, int end){
     spacing += (heigth_-y_margin_-pos_y_)/rows_;
     temp += buf;
   }
+    
     return temp;
 }
 
@@ -96,7 +98,18 @@ std::string PM10Graph::addAxisLines(std::string axis){
         }
         temp += "</g>\n";
     }
-    
-    
+    return temp;
 }
 
+std::string PM10Graph::addPlot(){
+    char buf[100];
+    std::string temp = "<polyline class=\"graphline\" points=\"";
+    int spacing = (width_ - pos_x_ - x_margin_)/M;
+    for(int i = 0; i<M;i++){
+        sprintf(buf,"%d,%d ",
+        x_margin_+spacing*i, heigth_+pos_y_-(int)(array[2][i]*2));
+        temp += buf;
+    }
+    temp += "\" fill=\"none\" stroke=\"green\" stroke-width=\"2\"/>\n";
+    return temp;
+}
