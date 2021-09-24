@@ -113,3 +113,7 @@ std::string PM10Graph::addPlot(){
     temp += "\" fill=\"none\" stroke=\"green\" stroke-width=\"2\"/>\n";
     return temp;
 }
+
+std::string PM10Graph::endGraph(){
+    return "</svg>\n";
+}

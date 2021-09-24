@@ -39,6 +39,7 @@ class PM10Graph: public Graph{
      std::string addAxisLines(std::string axis);
      std::string addPlot();
      std::string addRectangle(int posx, int posy);
+     std::string endGraph();
     ~PM10Graph();
 };
 
