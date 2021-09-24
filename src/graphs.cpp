@@ -101,7 +101,7 @@ std::string PM10Graph::addAxisLines(std::string axis){
     return temp;
 }
 
-std::string PM10Graph::addPlot(){
+std::string PM10Graph::addPlot(int PMxx){
     char buf[100];
     std::string temp = "<polyline class=\"graphline\" points=\"";
     int spacing = (width_ - pos_x_ - x_margin_)/M;
