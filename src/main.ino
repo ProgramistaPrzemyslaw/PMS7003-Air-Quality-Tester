@@ -26,7 +26,9 @@ Adafruit_AHTX0 aht;
 PMS pms(Serial);
 PMS::DATA data;
 
-
+//PMGraph PM10Graph("PM10",PM10_index,800,450,8,M);
+PMGraph _ZN7PMGraphD1Ev("PM10",PM10_index,800,450,8,M);
+PMGraph _ZN7PMGraphD0Ev("PM25",PM25_index,800,450,8,M);
 void setup(){
     Serial.begin(9600);
     //Serial.println("Begin");
