@@ -119,7 +119,7 @@ std::string PMGraph::endGraph(){
     return "</svg>\n";
 }
 
-void PMGraph::drawGraph(ESP8266WebServer &server){
+std::string PMGraph::drawGraph(){
     std::string graph;
     String page;
     graph += addHeader();
@@ -132,8 +132,8 @@ void PMGraph::drawGraph(ESP8266WebServer &server){
     graph += addXTitle();
     graph += addPlot();
     graph += endGraph();
-    page = graph.c_str();
-    server.send(200,"image/svg+xml",page);
+    //page = graph.c_str();
     //server.send(200,"image/svg+xml",page);
-
+    //server.send(200,"image/svg+xml",page);
+    return graph;
 }

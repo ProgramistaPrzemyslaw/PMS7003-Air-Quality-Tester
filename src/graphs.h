@@ -1,6 +1,6 @@
 #pragma once
 #include "header.h"
-#include <ESP8266WebServer.h>
+
 #include <string>
 
 #define PM10_index 3
@@ -10,7 +10,7 @@ class Graph
 {
 private:
 public:
-    virtual void drawGraph(ESP8266WebServer &server) = 0;
+    virtual std::string drawGraph() = 0;
     virtual std::string addHeader() = 0;
     virtual std::string addXLabel() = 0;
     virtual std::string addYLabel(int beginning, int end) = 0;
@@ -38,7 +38,7 @@ class PMGraph: public Graph{
     std::string title_;
     public:
     PMGraph(std::string title, int PM, int width, int heigth,int rows, int columns);
-     void drawGraph(ESP8266WebServer &server);
+     std::string drawGraph();
      std::string addHeader();
      std::string addXLabel();
      std::string addYLabel(int beginning, int end);
