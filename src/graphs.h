@@ -1,7 +1,7 @@
 #pragma once
 #include "header.h"
 
-#include <string>
+
 
 #define PM10_index 3
 #define PM25_index 2
@@ -13,7 +13,7 @@ public:
     virtual std::string drawGraph() = 0;
     virtual std::string addHeader() = 0;
     virtual std::string addXLabel() = 0;
-    virtual std::string addYLabel(int beginning, int end) = 0;
+    virtual std::string addYLabel(float beginning, float end) = 0;
     virtual std::string addXTitle() = 0;
     virtual std::string addYTitle() = 0;
     virtual std::string addAxisLines(std::string axis) = 0;
@@ -34,6 +34,7 @@ class PMGraph: public Graph{
     int pos_x_;
     int pos_y_;
     int PM_;
+    int rectHeight_;
     std::string graph_;
     std::string title_;
     public:
@@ -41,7 +42,7 @@ class PMGraph: public Graph{
      std::string drawGraph();
      std::string addHeader();
      std::string addXLabel();
-     std::string addYLabel(int beginning, int end);
+     std::string addYLabel(float beginning, float end);
      std::string addXTitle();
      std::string addYTitle();
      std::string addAxisLines(std::string axis);
