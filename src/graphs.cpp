@@ -21,9 +21,9 @@ std::string PMGraph::addRectangle(int posx, int posy){
     pos_y_ = posy;
     rectHeight_ = rows_*((heigth_ - posy - y_margin_)/rows_);
     //int heigth = heigth_ - posy - y_margin_ - compensation;
-
+//-1 down
     x_margin_ = width_-pos_x_-(colums_-1)*((width_-pos_x_)/(colums_-1));
-    rectWidth_ = width_ - posx - x_margin_;
+    rectWidth_ =(colums_-1)*((width_-pos_x_)/(colums_-1));
     char buf[200];
     sprintf(buf,"<rect x=\"%d\" y=\"%d\" width=\"%d\" height=\"%d\" fill=\"rgb(250, 230, 210)\" stroke-width=\"1\" stroke=\"rgb(0, 0, 0)\" />\n",
     posx, posy, rectWidth_, rectHeight_);
@@ -56,7 +56,7 @@ std::string PMGraph::addXLabel(){
         pos_x_+spacing-5, rectHeight_+2*pos_y_,
         pos_x_+spacing-5, rectHeight_+2*pos_y_,
         TimeArray[0][i]%24,TimeArray[1][i]%60);
-        spacing += 2*(width_ - pos_x_)/colums_;
+        spacing += 2*(rectWidth_)/(colums_-1);
         temp += buf;
     }
     }
@@ -68,6 +68,7 @@ std::string PMGraph::addYLabel(float beginning, float end){
     char buf[1000];
     std::string temp = "<g class=\"labels y-labels\">\n";
     int spacing = pos_y_;
+    maxValue_ = (int)end;
     for(int i = rows_; i>=0; i--){
     sprintf(buf,"<text x=\"%d\" y=\"%d\" style=\"alignment-baseline:hanging\">%.0f%%</text>\n",
     pos_x_-40 ,spacing-4, beginning+((float)i/(float)rows_)*end);
@@ -88,7 +89,7 @@ std::string PMGraph::addAxisLines(std::string axis){
         for(int i = 0; i<rows_; i++){
 
         sprintf(buf,"<line x1=\"%d\" x2=\"%d\" y1=\"%d\" y2=\"%d\" stroke=\"black\"></line>\n",
-        pos_x_, width_-x_margin_, spacing, spacing);
+        pos_x_, rectWidth_+pos_x_, spacing, spacing);
         spacing += rectHeight_/rows_;
         temp += buf;
         }
@@ -100,7 +101,7 @@ std::string PMGraph::addAxisLines(std::string axis){
 
         sprintf(buf,"<line x1=\"%d\" x2=\"%d\" y1=\"%d\" y2=\"%d\" stroke=\"black\"></line>\n",
         spacing, spacing, pos_y_, rectHeight_+pos_y_);
-        spacing += (width_ - pos_x_)/colums_;
+        spacing += (rectWidth_)/(colums_-1);
         temp += buf;
         }
         temp += "</g>\n";
@@ -111,12 +112,21 @@ std::string PMGraph::addAxisLines(std::string axis){
 std::string PMGraph::addPlot(){
     char buf[100];
     std::string temp = "<polyline class=\"graphline\" points=\"";
-    int spacing = (width_ - pos_x_)/M;
-    for(int i = 0; i<M;i++){
+    int spacing = rectWidth_/(colums_-1);
+    if(maxValue_ !=0 ){
+    for(int i = 0; i<colums_;i++){
         sprintf(buf,"%d,%d ",
-        pos_x_+spacing*i, rectHeight_+pos_y_-(int)(array[PM_][i]*2));
+        pos_x_+spacing*i, rectHeight_+pos_y_-(int)(array[PM_][i]*(rectHeight_/maxValue_)));
         temp += buf;
     }
+    }else if(maxValue_ == 0){
+      for(int i = 0; i<colums_;i++){
+        sprintf(buf,"%d,%d ",
+        pos_x_+spacing*i, rectHeight_+pos_y_-(int)(array[PM_][i]));
+        temp += buf;
+    }  
+    }
+    
     temp += "\" fill=\"none\" stroke=\"green\" stroke-width=\"2\"/>\n";
     return temp;
 }
@@ -129,7 +139,7 @@ std::string PMGraph::drawGraph(){
     std::string graph;
     String page;
     graph += addHeader();
-    graph += addYLabel(0,800);
+    graph += addYLabel(0,getMaxValue(PM_));
     graph += addRectangle(60,10);
     graph += addAxisLines("y");
     graph += addAxisLines("x");

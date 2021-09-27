@@ -36,6 +36,7 @@ class PMGraph: public Graph{
     int PM_;
     int rectHeight_;
     int rectWidth_;
+    int maxValue_;
     std::string graph_;
     std::string title_;
     public:

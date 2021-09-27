@@ -27,11 +27,13 @@ PMS pms(Serial);
 PMS::DATA data;
 
 //PMGraph PM10Graph("PM10",PM10_index,800,450,8,M);
-PMGraph _ZN7PMGraphD1Ev("PM10",PM10_index,800,450,8,M);
-PMGraph _ZN7PMGraphD0Ev("PM25",PM25_index,800,450,8,M);
+std::string title = "PM10 norm";
+PMGraph _ZN7PMGraphD1Ev(title,PM10_index,1200,500,8,M);
+std::string title1 = "PM25";
+PMGraph _ZN7PMGraphD0Ev(title1,PM25_index,1200,500,8,M);
 void setup(){
     Serial.begin(9600);
-    //Serial.println("Begin");
+    Serial.println("Begin");
     pinMode(sleepPin, OUTPUT);
     digitalWrite(sleepPin,LOW);
     pms.passiveMode();
@@ -49,8 +51,14 @@ void setup(){
     //Serial.println(IP);
 
     server.on("/", handleRoot);
-    server.on("/pm25", drawGraphPM25);
-    server.on("/pm10", drawGraphPM10);
+    //server.on("/pm25", drawGraphPM25);
+    //server.on("/pm10", drawGraphPM10);
+    server.on("/pm25",[](){
+      server.send(200,"image/svg+xml",_ZN7PMGraphD0Ev.drawGraph().c_str());
+    });
+    server.on("/pm10",[](){
+      server.send(200,"image/svg+xml",_ZN7PMGraphD1Ev.drawGraph().c_str());
+    });
     server.on("/temperature",drawGraphTemperature);
     server.on("/settime",handleSetTime);
     server.on("/get",handleSetGet);
