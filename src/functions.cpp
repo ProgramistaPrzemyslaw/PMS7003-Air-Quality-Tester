@@ -143,8 +143,8 @@ tempPM10[i+1] = array[3][i];
 }
 tempTemp[0] = Temperature;
 tempPM1[0] = PM1;
-tempPM25[0] = PM25*25/100;
-tempPM10[0] = PM10*50/100;
+tempPM25[0] = PM25/25*100;
+tempPM10[0] = PM10/50*100;
 
 for(int i=0;i<M;i++){
 array[0][i]=tempTemp[i];
@@ -329,7 +329,7 @@ int compensatedMillis(int hour, int minute){
 int getMaxValue(int index){
   int maxValue = 0;
   for(int i = 0; i<M; i++){
-    int temp = array[index][i];
+    int temp = (int)array[index][i];
 
     if(maxValue<temp)
     maxValue = temp;
