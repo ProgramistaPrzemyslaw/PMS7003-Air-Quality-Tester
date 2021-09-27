@@ -7,7 +7,7 @@ PMGraph::PMGraph(std::string title,int PM , int width, int heigth,int rows, int 
 title_(title), PM_(PM), width_(width), heigth_(heigth),rows_(rows),colums_(columns){
 
 x_margin_ = 0;
-y_margin_ = 60;
+y_margin_ = 80;
 }
 
 std::string PMGraph::addHeader(){
@@ -23,10 +23,10 @@ std::string PMGraph::addRectangle(int posx, int posy){
     //int heigth = heigth_ - posy - y_margin_ - compensation;
 
     x_margin_ = width_-pos_x_-(colums_-1)*((width_-pos_x_)/(colums_-1));
-    int width = width_ - posx - x_margin_;
+    rectWidth_ = width_ - posx - x_margin_;
     char buf[200];
     sprintf(buf,"<rect x=\"%d\" y=\"%d\" width=\"%d\" height=\"%d\" fill=\"rgb(250, 230, 210)\" stroke-width=\"1\" stroke=\"rgb(0, 0, 0)\" />\n",
-    posx, posy, width, rectHeight_);
+    posx, posy, rectWidth_, rectHeight_);
     return buf;
 }
 
@@ -53,8 +53,8 @@ std::string PMGraph::addXLabel(){
     for(int i = 0; i< colums_; i++){
         if(i%2==0){
         sprintf(buf,"<text x=\"%d\" y=\"%d\" transform=\"rotate(45,%d,%d)\">%02d:%02d</text>\n",
-        pos_x_+spacing-5, heigth_-y_margin_,
-        pos_x_+spacing-5, heigth_-y_margin_,
+        pos_x_+spacing-5, rectHeight_+2*pos_y_,
+        pos_x_+spacing-5, rectHeight_+2*pos_y_,
         TimeArray[0][i]%24,TimeArray[1][i]%60);
         spacing += 2*(width_ - pos_x_)/colums_;
         temp += buf;
