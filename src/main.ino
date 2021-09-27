@@ -39,10 +39,8 @@ void setup(){
     pms.passiveMode();
 
     if(! aht.begin()){
-      //  Serial.println("AHT not found");
         while(1) delay(10);
     }
-    //Serial.println("AHT found");
 
     WiFi.softAP(ssid,password);
 
@@ -51,8 +49,6 @@ void setup(){
     //Serial.println(IP);
 
     server.on("/", handleRoot);
-    //server.on("/pm25", drawGraphPM25);
-    //server.on("/pm10", drawGraphPM10);
     server.on("/pm25",[](){
       server.send(200,"image/svg+xml",_ZN7PMGraphD0Ev.drawGraph().c_str());
     });
@@ -104,11 +100,15 @@ pms.sleep();
 digitalWrite(sleepPin,LOW);
 addToArray(Temperature, PM1, PM25, PM10);
 addToTimeArray(hour,minute);
+_ZN7PMGraphD1Ev.drawGraph();
+_ZN7PMGraphD0Ev.drawGraph();
 }
 
 }else{
 addToArray(Temperature, PM1, PM25, PM10);
 addToTimeArray(hour,minute);
+_ZN7PMGraphD1Ev.drawGraph();
+_ZN7PMGraphD0Ev.drawGraph();
 }
 
 }else if(readyToRead){
@@ -118,9 +118,5 @@ addToTimeArray(hour,minute);
 if(minute%6==0){
 calculateAverage();
 }
-
-//Serial.println(Humidity);
-//Serial.println(Temperature);
-//Serial.println("__________ ");
 
 }

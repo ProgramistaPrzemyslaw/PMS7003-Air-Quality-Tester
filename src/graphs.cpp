@@ -70,7 +70,7 @@ std::string PMGraph::addYLabel(float beginning, float end){
     int spacing = pos_y_;
     maxValue_ = (int)end;
     for(int i = rows_; i>=0; i--){
-    sprintf(buf,"<text x=\"%d\" y=\"%d\" style=\"alignment-baseline:hanging\">%.0f%%</text>\n",
+    sprintf(buf,"<text x=\"%d\" y=\"%d\" style=\"alignment-baseline:hanging\">%.1f%%</text>\n",
     pos_x_-40 ,spacing-4, beginning+((float)i/(float)rows_)*end);
     spacing += (heigth_-y_margin_-pos_y_)/rows_;
     temp += buf;
@@ -139,18 +139,14 @@ std::string PMGraph::drawGraph(){
     std::string graph;
     String page;
     graph += addHeader();
+    graph += addRectangle(70,10);
     graph += addYLabel(0,getMaxValue(PM_));
-    graph += addRectangle(60,10);
     graph += addAxisLines("y");
     graph += addAxisLines("x");
-    //graph += addYLabel(0,800);
     graph += addXLabel();
     graph += addYTitle();
     graph += addXTitle();
     graph += addPlot();
     graph += endGraph();
-    //page = graph.c_str();
-    //server.send(200,"image/svg+xml",page);
-    //server.send(200,"image/svg+xml",page);
     return graph;
 }
