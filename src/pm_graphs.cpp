@@ -113,20 +113,38 @@ std::string PMGraph::addPlot(){
     char buf[100];
     std::string temp = "<polyline class=\"graphline\" points=\"";
     int spacing = rectWidth_/(colums_-1);
-    if(maxValue_ !=0 ){
-    for(int i = 0; i<colums_;i++){
+
+
+
+    if(maxValue_ > minValue_ && minValue_ >=0 ){
+      for(int i = 0; i<colums_;i++){
         sprintf(buf,"%d,%d ",
-        pos_x_+spacing*i, rectHeight_+pos_y_-(int)(array[PM_][i]*(rectHeight_/maxValue_)));
+        pos_x_+spacing*i, rectHeight_+pos_y_-(int)(array[PM_][i]*(rectHeight_/(maxValue_-minValue_))));
         temp += buf;
-    }
-    }else if(maxValue_ == 0){
+        }
+    }else if((maxValue_ == 0 && minValue_ == 0)||maxValue_==minValue_){
       for(int i = 0; i<colums_;i++){
         sprintf(buf,"%d,%d ",
         pos_x_+spacing*i, rectHeight_+pos_y_-(int)(array[PM_][i]));
         temp += buf;
-    }  
+        }  
+    }else if(minValue_ < 0 && maxValue_ > 0){
+      for(int i = 0; i<colums_;i++){
+        sprintf(buf,"%d,%d ",
+        pos_x_+spacing*i, (maxValue_-(int)(array[PM_][i]))*(rectHeight_/(maxValue_-minValue_)));
+        temp += buf;
+      }
+    }else if(maxValue_ < 0 && minValue_ < maxValue_){
+      for(int i = 0; i<colums_;i++){
+        sprintf(buf,"%d,%d ",
+        pos_x_+spacing*i, pos_y_-rectHeight_-(int)(array[PM_][i]*(rectHeight_/(maxValue_-minValue_))));
+        temp += buf;
+      }
     }
     
+
+
+
     temp += "\" fill=\"none\" stroke=\"green\" stroke-width=\"2\"/>\n";
     return temp;
 }
@@ -140,7 +158,7 @@ std::string PMGraph::drawGraph(){
     String page;
     graph += addHeader();
     graph += addRectangle(70,10);
-    graph += addYLabel(0,getMaxValue(PM_));
+    graph += addYLabel(getMinValue(PM_),getMaxValue(PM_));
     graph += addAxisLines("y");
     graph += addAxisLines("x");
     graph += addXLabel();

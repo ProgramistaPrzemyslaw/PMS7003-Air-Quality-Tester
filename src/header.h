@@ -52,3 +52,4 @@ void drawGraphTemperature();
 
 int compensatedMillis(int hour, int minute);
 int getMaxValue(int index);
+int getMinValue(int index);

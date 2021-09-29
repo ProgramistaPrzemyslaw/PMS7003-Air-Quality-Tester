@@ -165,63 +165,6 @@ void calculateAverage(){
 }
 
 
-void drawGraphTemperature(){
-  String out;
-  out.reserve(6600);
-  int rows = 8;
-  int spacing=10;
-  int temperature[] ={-30,-20,-10,0,10,20,30,40}; 
-  char temp[100];
-  out += "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"800\" height=\"450\">\n";
-  out += "<rect x=\"60\" y=\"10\" width=\"705\" height=\"350\" fill=\"rgb(250, 230, 210)\" stroke-width=\"1\" stroke=\"rgb(0, 0, 0)\" />\n";
-
-  out += "<g class=\"axis-lines\">\n";
-  for(int i = 0; i<rows; i++){
-    sprintf(temp,"<line x1=\"60\" x2=\"765\" y1=\"%d\" y2=\"%d\" stroke=\"black\"></line>\n",spacing,spacing);
-    out += temp;
-    spacing += 50;
-  }
-  spacing = 60;
-  for(int i = 0; i<M; i++){
-    sprintf(temp,"<line x1=\"%d\" x2=\"%d\" y1=\"10\" y2=\"360\" stroke=\"black\"></line>\n",spacing,spacing);
-    out += temp;
-    spacing += 15;
-  }
-
-  out += "</g>\n";
-  out += "<g class=\"labels y-labels\">\n";
-  spacing=0;
-  for(int i = 0; i<rows; i++){
-    sprintf(temp,"<text x=\"30\" y=\"%d\" style=\"alignment-baseline:hanging\">%d</text>\n",spacing+4,temperature[rows-1-i]);
-    spacing += 50;
-    out += temp;
-  }
-  out += "</g>\n";
-
-  out += "<g class=\"labels x-labels\">\n";
-  spacing = 0;
-
-  for(int i = 0; i<M; i++){
-    if(i%2==0){
-    sprintf(temp,"<text x=\"%d\" y=\"380\" transform=\"rotate(45,%d,380)\">%02d:%02d</text>\n",55+spacing, 55+spacing,TimeArray[0][i]%24,TimeArray[1][i]%60);
-    spacing +=30;
-    out += temp;
-    }
-  }
-  
-  out += "</g>\n";
-  out += "<g class=\"headings x-heading\"><text x=\"50%\" y=\"440\">Time</text></g>\n";
-  out += "<g class=\"headings y-heading\"><text x=\"15\" y=\"235\" transform=\"rotate(-90,15,235)\">Temperature(C)</text></g>";
-  out += "<polyline class=\"graphline\" points=\"";
-  for(int i = 0; i<M; i++){
-    sprintf(temp,"%d,%d ",60+15*i,210-(int)(array[0][i]*5));
-    out += temp;
-  }
-  out +="\" fill=\"none\" stroke=\"green\" stroke-width=\"2\"/>\n";
-  out += "</svg>\n";
-  server.send(200, "image/svg+xml", out);
-}
-
 int compensatedMillis(int hour, int minute){
   return (hour*60*60*1000+minute*60*1000 - millis());
 }
@@ -236,4 +179,16 @@ int getMaxValue(int index){
 
   }
   return maxValue;
+}
+
+int getMinValue(int index){
+  int minValue = 100000;
+  for(int i = 0; i<M; i++){
+    int temp = (int)array[index][i];
+
+    if(minValue>=temp)
+    minValue = temp;
+
+  }
+  return minValue;
 }

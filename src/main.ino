@@ -31,6 +31,8 @@ std::string title = "PM10 norm";
 PMGraph _ZN7PMGraphD1Ev(title,PM10_index,1200,500,8,M);
 std::string title1 = "PM25";
 PMGraph _ZN7PMGraphD0Ev(title1,PM25_index,1200,500,8,M);
+std::string title2= "Temperature";
+PMGraph TempGraph(title2,0,1200,500,8,M);
 void setup(){
     Serial.begin(9600);
     Serial.println("Begin");
@@ -55,7 +57,10 @@ void setup(){
     server.on("/pm10",[](){
       server.send(200,"image/svg+xml",_ZN7PMGraphD1Ev.drawGraph().c_str());
     });
-    server.on("/temperature",drawGraphTemperature);
+    //server.on("/temperature",drawGraphTemperature);
+    server.on("/temperature",[](){
+      server.send(200,"image/svg+xml",TempGraph.drawGraph().c_str());
+    });
     server.on("/settime",handleSetTime);
     server.on("/get",handleSetGet);
     server.begin();
